@@ -9,7 +9,7 @@ async function fetchMessages() {
     messages.forEach((msg, index) => {
         const div = document.createElement('div');
         div.className = 'message';
-        div.innerHTML = '<span class="username">' + msg.username + ':</span> ' + msg.content + 
+        div.innerHTML = '<span class="username">' + msg.username + ':</span> ' + msg.content +
             ' <button data-index="' + index + '">Delete</button>';
         messagesDiv.appendChild(div);
     });
@@ -28,13 +28,4 @@ async function fetchMessages() {
     });
 }
 
-if (
-    location.hostname !== "localhost" &&
-    location.hostname !== "127.0.0.1"
-){
-    alert("not allow");
-    location.href = "/index.html";
-}
-else{
-    fetchMessages();
-}
+fetchMessages();
