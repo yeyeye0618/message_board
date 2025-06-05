@@ -3,7 +3,7 @@ import './styles.css';
 const messagesDiv = document.getElementById('messages');
 
 async function fetchMessages() {
-    const response = await fetch('/message_board/messages');
+    const response = await fetch('https://message-board-7495.onrender.com/message_board/messages');
     const messages = await response.json();
     messagesDiv.innerHTML = '';
     messages.forEach((msg, index) => {
@@ -18,7 +18,7 @@ async function fetchMessages() {
     document.querySelectorAll('button[data-index]').forEach(button => {
         button.addEventListener('click', async () => {
             const index = parseInt(button.getAttribute('data-index'));
-            await fetch('/message_board/messages', {
+            await fetch('https://message-board-7495.onrender.com/message_board/messages', {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ index })
