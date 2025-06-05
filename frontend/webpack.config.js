@@ -5,11 +5,12 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
   entry: {
     main: './script.js',
-    admin: './admin.js'
+    admin: './admin.js',
   },
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
+    publicPath: './',
     clean: true,
   },
   module: {
@@ -24,17 +25,17 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './index.html',
       filename: 'index.html',
-      chunks: ['main']
+      chunks: ['main'],
     }),
     new HtmlWebpackPlugin({
       template: './admin.html',
       filename: 'admin.html',
-      chunks: ['admin']
+      chunks: ['admin'],
     }),
     new CopyWebpackPlugin({
       patterns: [
-        { from: 'styles.css', to: 'styles.css' }
-      ]
+        { from: 'styles.css', to: 'styles.css' }, // 確保 CSS 被複製進 dist
+      ],
     }),
   ],
   mode: 'production',
