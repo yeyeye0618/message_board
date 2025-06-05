@@ -1,4 +1,4 @@
-name: Docker CI/CD
+name: Full CI/CD - Backend & Frontend Docker + Frontend GitHub Pages
 
 on:
   push:
@@ -36,8 +36,8 @@ jobs:
       - name: Build and push backend image
         uses: docker/build-push-action@v5
         with:
-          context: .
-          file: backend/Dockerfile
+          context: ./backend
+          file: ./backend/Dockerfile
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_BACKEND }}:latest
 
@@ -48,3 +48,30 @@ jobs:
           file: ./frontend/Dockerfile
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_FRONTEND }}:latest
+
+  deploy-frontend-pages:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install frontend dependencies
+        working-directory: ./frontend
+        run: npm install
+
+      - name: Build frontend static files
+        working-directory: ./frontend
+        run: npm run build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./frontend/dist
