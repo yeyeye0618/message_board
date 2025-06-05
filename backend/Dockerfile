@@ -1,21 +1,15 @@
-# Use official Python image as base
 FROM python:3.11-slim
 
-# Set working directory
 WORKDIR /app
 
-# Copy backend files
-COPY backend ./backend
+COPY requirements.txt ./requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Install backend dependencies
-RUN pip install flask flask-cors
+COPY . .
 
-# Expose port 5000 for Flask app
-EXPOSE 5000
-
-# Set environment variables
 ENV FLASK_APP=backend/app.py
 ENV FLASK_RUN_HOST=0.0.0.0
 
-# Start Flask app
+EXPOSE 5000
+
 CMD ["flask", "run"]
