@@ -6,7 +6,7 @@ const usernameInput = document.getElementById('username');
 const contentInput = document.getElementById('content');
 
 async function fetchMessages() {
-    const response = await fetch('http://127.0.0.1:5000/messages');
+    const response = await fetch('/messages');
     const messages = await response.json();
     messagesDiv.innerHTML = '';
     messages.forEach(msg => {
@@ -22,7 +22,7 @@ form.addEventListener('submit', async (e) => {
     const username = usernameInput.value.trim();
     const content = contentInput.value.trim();
     if (!username || !content) return;
-    await fetch('http://127.0.0.1:5000/messages', {
+    await fetch('/messages', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, content })
